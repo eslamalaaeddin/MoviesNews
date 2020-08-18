@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/mobile_navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/mobile_navigation"
+    app:startDestination="@id/popularMoviesFragment">
 
+    <fragment
+        android:id="@+id/popularMoviesFragment"
+        android:name="fragments.PopularMoviesFragment"
+        android:label="PopularMoviesFragment" >
+        <action
+            android:id="@+id/action_popularMoviesFragment_to_topRatedMoviesFragment"
+            app:destination="@id/topRatedMoviesFragment" />
+        <action
+            android:id="@+id/action_popularMoviesFragment_to_favoriteMoviesFragment"
+            app:destination="@id/favoriteMoviesFragment" />
+        <action
+            android:id="@+id/action_popularMoviesFragment_to_upComingMoviesFragment"
+            app:destination="@id/upComingMoviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/topRatedMoviesFragment"
+        android:name="fragments.TopRatedMoviesFragment"
+        android:label="TopRatedMoviesFragment" >
+        <action
+            android:id="@+id/action_topRatedMoviesFragment_to_popularMoviesFragment"
+            app:destination="@id/popularMoviesFragment" />
+        <action
+            android:id="@+id/action_topRatedMoviesFragment_to_upComingMoviesFragment"
+            app:destination="@id/upComingMoviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/upComingMoviesFragment"
+        android:name="fragments.UpComingMoviesFragment"
+        android:label="UpComingMoviesFragment" >
+        <action
+            android:id="@+id/action_upComingMoviesFragment_to_topRatedMoviesFragment"
+            app:destination="@id/topRatedMoviesFragment" />
+        <action
+            android:id="@+id/action_upComingMoviesFragment_to_favoriteMoviesFragment"
+            app:destination="@id/favoriteMoviesFragment" />
+        <action
+            android:id="@+id/action_upComingMoviesFragment_to_popularMoviesFragment"
+            app:destination="@id/popularMoviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteMoviesFragment"
+        android:name="fragments.FavoriteMoviesFragment"
+        android:label="FavoriteMoviesFragment" >
+        <action
+            android:id="@+id/action_favoriteMoviesFragment_to_upComingMoviesFragment"
+            app:destination="@id/upComingMoviesFragment" />
+        <action
+            android:id="@+id/action_favoriteMoviesFragment_to_popularMoviesFragment"
+            app:destination="@id/popularMoviesFragment" />
+    </fragment>
 </navigation>
