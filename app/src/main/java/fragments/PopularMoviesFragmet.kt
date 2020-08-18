@@ -1,4 +1,0 @@
-package fragments
-
-class PopularMoviesFragmet {
-}
