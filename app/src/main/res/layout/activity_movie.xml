@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#232323"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MovieActivity">
+
+
+    <Button
+        android:id="@+id/more_about_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:text="More about"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/watch_trailer_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/watch_trailer_button"
+        app:layout_constraintTop_toTopOf="@+id/watch_trailer_button" />
+
+    <ImageView
+        android:id="@+id/back_poster_image_view"
+        android:layout_width="0dp"
+        android:layout_height="196dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/fearless_back" />
+
+    <ImageView
+        android:id="@+id/front_poster_image_view"
+        android:layout_width="129dp"
+        android:layout_height="168dp"
+        app:layout_constraintBottom_toBottomOf="@+id/back_poster_image_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_poster_image_view"
+        tools:srcCompat="@drawable/fearless" />
+
+    <TextView
+        android:id="@+id/movie_title_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        tools:text="Fearless"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/front_poster_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/back_poster_image_view" />
+
+    <ImageView
+        android:id="@+id/favorite_image_view"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_favorite"
+        tools:ignore="VectorDrawableCompat"
+        app:tint="#232323" />
+
+    <Button
+        android:id="@+id/watch_trailer_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="Watch trailer"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toStartOf="@+id/more_about_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_overview_text_view" />
+
+    <TextView
+        android:id="@+id/movie_duration_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        tools:text="159 Minutes"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_release_date_text_view"
+        app:layout_constraintStart_toEndOf="@+id/movie_release_date_text_view"
+        app:layout_constraintTop_toTopOf="@+id/movie_release_date_text_view"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/movie_release_date_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="2020/08/14"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/front_poster_image_view"
+        app:layout_constraintStart_toEndOf="@+id/front_poster_image_view" />
+
+    <TextView
+        android:id="@+id/movie_overview_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        tools:text="A teen gamer is forced to level up to full-time babysitter when his favorite video game drops three superpowered infants from space into his backyard."
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/front_poster_image_view" />
+
+    <TextView
+        android:id="@+id/recommendations_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Recommendations"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/watch_trailer_button" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/popular_movies_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recommendations_text_view" />
+
+    <TextView
+        android:id="@+id/moview_rating_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="8.1"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/movie_release_date_text_view"
+        app:layout_constraintStart_toStartOf="@+id/movie_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title_text_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
