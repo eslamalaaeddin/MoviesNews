@@ -9,11 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val ID = "id"
-private const val POSTER_PATH = "posterPath"
-private const val BACK_DROP_PATH = "backdropPath"
-private const val TITLE = "title"
-private const val RELEASE_DATE = "releaseDate"
-private const val OVERVIEW = "overview"
 
 class MainActivity : AppCompatActivity(), Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +17,6 @@ class MainActivity : AppCompatActivity(), Callback {
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
-
 
         val navController = host.navController
 
