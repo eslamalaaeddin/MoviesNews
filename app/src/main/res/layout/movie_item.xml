@@ -43,18 +43,18 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:id="@+id/movie_title"
+                android:id="@+id/movie_title_text_view"
                 tools:text="Lord of the rings"
                 android:textSize="21sp"
                 android:textColor="@android:color/black"
                 />
 
-            <ImageView
-                android:layout_width="21dp"
-                android:layout_height="21dp"
-                android:id="@+id/movie_favorite_image_view"
-                android:src="@drawable/ic_favorite"
-                android:layout_gravity="center"/>
+<!--            <ImageView-->
+<!--                android:layout_width="21dp"-->
+<!--                android:layout_height="21dp"-->
+<!--                android:id="@+id/movie_favorite_image_view"-->
+<!--                android:src="@drawable/ic_favorite"-->
+<!--                android:layout_gravity="center"/>-->
 
         </LinearLayout>
 
