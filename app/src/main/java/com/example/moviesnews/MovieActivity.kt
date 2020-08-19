@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +30,7 @@ class MovieActivity : AppCompatActivity() {
 
     private lateinit var backPosterImageView: ImageView
     private lateinit var frontPosterImageView: ImageView
+    private lateinit var favoriteImageView: ImageView
     private lateinit var movieTitleTextView:TextView
     private lateinit var movieReleaseDateTextView:TextView
     private lateinit var movieDurationTextView:TextView
@@ -63,6 +63,7 @@ class MovieActivity : AppCompatActivity() {
 
         backPosterImageView = findViewById(R.id.back_poster_image_view)
         frontPosterImageView = findViewById(R.id.front_poster_image_view)
+        favoriteImageView = findViewById(R.id.favorite_image_view)
         movieTitleTextView = findViewById(R.id.movie_title_text_view)
         movieReleaseDateTextView = findViewById(R.id.movie_release_date_text_view)
         movieDurationTextView = findViewById(R.id.movie_duration_text_view)
@@ -77,6 +78,7 @@ class MovieActivity : AppCompatActivity() {
             LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         //to get the movie details
         movieViewModel.detailedMovieLiveData.observe(this , Observer {
+            itemId = it.id
             backPosterPath = it.backdrop_path
             frontPosterPath = it.poster_path
             title = it.title
@@ -105,7 +107,6 @@ class MovieActivity : AppCompatActivity() {
                 .load(backPosterUrl)
                 .placeholder(R.drawable.ic_loading)
                 .into(backPosterImageView)
-            Log.i(TAG, "onCreate: ISLAM $movie")
         })
         //to get a movie recommendations
         movieViewModel.recommendedMoviesLiveData.observe(this, Observer {
@@ -132,10 +133,15 @@ class MovieActivity : AppCompatActivity() {
                 Intent.createChooser(browserIntent, "Choose browser of your choice")
             startActivity(browserChooserIntent)
         }
+
+        //favorite image view
+        favoriteImageView.setOnClickListener{
+
+        }
     }
 
 
-    class MoviesAdapter (private val movies:List<Movie>) :
+    class MoviesAdapter(private val movies: List<Movie>) :
         RecyclerView.Adapter<MoviesAdapter.PopularMoviesViewHolder>() {
 
         inner class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -147,10 +153,6 @@ class MovieActivity : AppCompatActivity() {
 
             @SuppressLint("SetTextI18n")
             fun bind(movie: Movie) {
-//                movieTitleTextView.text = movie.title
-//                movieRatingTextView.text = "${movie.vote_average}/10"
-//                movieReleaseDateTextView.text = movie.release_date
-//                movieLanguageTextView.text = movie.original_language
 
                 val url = "https://image.tmdb.org/t/p/w500".plus(movie.poster_path)
 

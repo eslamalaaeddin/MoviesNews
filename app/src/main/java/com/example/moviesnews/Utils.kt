@@ -3,7 +3,7 @@ package com.example.moviesnews
 import android.content.Context
 import android.preference.PreferenceManager
 
-private const val MOVIE = "movie"
+private const val MOVIE_ID = "movie"
 object Utils {
 
     var itemId = 0
@@ -13,15 +13,15 @@ object Utils {
     var releaseDate = ""
     var overview = ""
 
-    fun getFavorites(context: Context?): Boolean {
+    fun getFavorites(context: Context?): Int? {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(MOVIE, false)
+        return prefs.getInt(MOVIE_ID, 0)
     }
 
-    fun setFavorites(context: Context?, movieState: Boolean) {
+    fun setFavorites(context: Context?, movieId: Int) {
         PreferenceManager.getDefaultSharedPreferences(context)
             .edit()
-            .putBoolean(MOVIE, movieState)
+            .putInt(MOVIE_ID, movieId)
             .apply()
     }
 
