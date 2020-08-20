@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+
+
+
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#232323"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MovieActivity">
+    android:fillViewport="true"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="#232323"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MovieActivity">
+
+
 
 
     <Button
@@ -25,15 +37,15 @@
         app:layout_constraintStart_toEndOf="@+id/watch_trailer_button"
         app:layout_constraintTop_toTopOf="@+id/watch_trailer_button" />
 
-    <ImageView
-        android:id="@+id/back_poster_image_view"
-        android:layout_width="0dp"
-        android:layout_height="196dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/fearless_back" />
+        <ImageView
+            android:id="@+id/back_poster_image_view"
+            android:layout_width="0dp"
+            android:layout_height="196dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/fearless_back" />
 
     <ImageView
         android:id="@+id/front_poster_image_view"
@@ -68,7 +80,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_favorite"
         tools:ignore="VectorDrawableCompat"
-        app:tint="#232323" />
+        app:tint="#C0CA33" />
 
     <Button
         android:id="@+id/watch_trailer_button"
@@ -135,18 +147,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/watch_trailer_button" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/popular_movies_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recommendations_text_view" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/popular_movies_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recommendations_text_view" />
 
     <TextView
         android:id="@+id/moview_rating_text_view"
@@ -159,3 +171,6 @@
         app:layout_constraintTop_toBottomOf="@+id/movie_title_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+
