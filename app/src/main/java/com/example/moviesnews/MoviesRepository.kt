@@ -1,17 +1,23 @@
 package com.example.moviesnews
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Room
 import api.MovieApi
+import database.MovieDatabase
+import fragments.FavoriteMoviesFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.Executors
 
 const val BASE_URL = "https://api.themoviedb.org/3/movie/"
 private const val TAG = "MoviesRepository"
+private const val DATABASE_NAME = "movie-database"
 class MoviesRepository {
     private val movieApi:MovieApi
     private lateinit var detailedMovie: DetailedMovie
@@ -22,6 +28,7 @@ class MoviesRepository {
             .build()
 
          movieApi = retrofit.create(MovieApi::class.java)
+
     }
 
 
@@ -142,6 +149,76 @@ class MoviesRepository {
         })
 
         return responseLiveData
+    }
+
+    //to get a movies details
+    fun getFavoriteMovies(movieId:Int) : LiveData<DetailedMovie> {
+
+        val responseLiveData = MutableLiveData<DetailedMovie>()
+        val moviesRequest = movieApi.getMovieDetails(movieId)
+        moviesRequest.enqueue(object : Callback<DetailedMovie> {
+            override fun onFailure(call: Call<DetailedMovie>, t: Throwable) {
+                Log.i(TAG, "onFailure: ${t.message.toString()}")
+            }
+
+            override fun onResponse(call: Call<DetailedMovie>, response: Response<DetailedMovie>) {
+                detailedMovie = response.body()!!
+                responseLiveData.value = detailedMovie
+                Log.i(TAG, "ALAA onResponse: $detailedMovie")
+            }
+        })
+
+        return responseLiveData
+    }
+
+    /*
+        Database working
+     */
+
+    private val executor = Executors.newSingleThreadExecutor()
+
+    private val movieDao = getDbInstance().getMovieDao()
+
+    fun getMovies() : LiveData<List<Model>> = movieDao.getMovies()
+    var movie:Model? = null
+    fun getMovie(movieId:Int) : LiveData<Model> = movieDao.getMovie(movieId)
+
+    fun insertMovie(model: Model) {
+        executor.execute {
+            movieDao.insertMovie(model)
+        }
+    }
+
+    fun deleteMovie(model: Model) {
+        executor.execute {
+            movieDao.deleteMovie(model)
+        }
+    }
+
+    fun updateMovie(model: Model) {
+        executor.execute {
+            movieDao.updateMovie(model)
+        }
+    }
+
+    //to het a database instance
+    companion object{
+        private  var databaseInstance : MovieDatabase? = null
+
+        fun initialize(context: Context) {
+            if (databaseInstance == null) {
+                    databaseInstance = Room.databaseBuilder(
+                        context.applicationContext,
+                        MovieDatabase::class.java,
+                        DATABASE_NAME
+                    ).build()
+            }
+        }
+
+        fun getDbInstance () : MovieDatabase {
+            return databaseInstance ?: throw IllegalStateException("Movie database must be initialized")
+        }
+
     }
 
 
