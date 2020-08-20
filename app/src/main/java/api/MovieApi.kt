@@ -27,4 +27,6 @@ interface MovieApi  {
     @GET("{movie_id}/videos?api_key=$apiKey")
     fun getMovieTrailer(@Path("movie_id")id:Int):Call<MovieTrailerModel>
 
+
+
 }
