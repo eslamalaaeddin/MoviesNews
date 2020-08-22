@@ -152,23 +152,8 @@ class MoviesRepository {
     }
 
     //to get a movies details
-    fun getFavoriteMovies(movieId:Int) : LiveData<DetailedMovie> {
-
-        val responseLiveData = MutableLiveData<DetailedMovie>()
-        val moviesRequest = movieApi.getMovieDetails(movieId)
-        moviesRequest.enqueue(object : Callback<DetailedMovie> {
-            override fun onFailure(call: Call<DetailedMovie>, t: Throwable) {
-                Log.i(TAG, "onFailure: ${t.message.toString()}")
-            }
-
-            override fun onResponse(call: Call<DetailedMovie>, response: Response<DetailedMovie>) {
-                detailedMovie = response.body()!!
-                responseLiveData.value = detailedMovie
-                Log.i(TAG, "ALAA onResponse: $detailedMovie")
-            }
-        })
-
-        return responseLiveData
+    suspend fun getFavoriteMovies(movieId:Int) : DetailedMovie {
+        return movieApi.getFav(movieId)
     }
 
     /*
@@ -179,27 +164,20 @@ class MoviesRepository {
 
     private val movieDao = getDbInstance().getMovieDao()
 
-    fun getMovies() : LiveData<List<Model>> = movieDao.getMovies()
+
+    suspend fun getMovies() : List<Model> = movieDao.getMovies()
     var movie:Model? = null
-    fun getMovie(movieId:Int) : LiveData<Model> = movieDao.getMovie(movieId)
+    suspend fun getMovie(movieId:Int) : Model = movieDao.getMovie(movieId)
 
-    fun insertMovie(model: Model) {
-        executor.execute {
-            movieDao.insertMovie(model)
-        }
-    }
+    suspend fun insertMovie(model: Model) = movieDao.insertMovie(model)
 
-    fun deleteMovie(model: Model) {
-        executor.execute {
-            movieDao.deleteMovie(model)
-        }
-    }
+    suspend fun deleteMovie(model: Model) = movieDao.deleteMovie(model)
 
-    fun updateMovie(model: Model) {
-        executor.execute {
-            movieDao.updateMovie(model)
-        }
-    }
+    suspend fun updateMovie(model: Model) = movieDao.updateMovie(model)
+
+
+
+
 
     //to het a database instance
     companion object{
