@@ -1,5 +1,7 @@
 package fragments
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,17 +14,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviesnews.Callback
 import com.example.moviesnews.Movie
 import com.example.moviesnews.R
+import com.example.moviesnews.Utils
 import com.squareup.picasso.Picasso
 import viewmodels.PopularMoviesViewModel
 
 private const val TAG = "PopularMoviesFragment"
+lateinit var callback: Callback
 class PopularMoviesFragment () : Fragment() {
     private lateinit var generalView: View
     private lateinit var popularMoviesViewModel: PopularMoviesViewModel
-    private lateinit var popularMoviesAdapter: PopularMoviesAdapter
+    private lateinit var popularMoviesAdapter: MoviesAdapter
     private lateinit var popularMoviesRecyclerView: RecyclerView
+
+
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as Callback
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,41 +54,52 @@ class PopularMoviesFragment () : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        popularMoviesRecyclerView = view.findViewById(R.id.popular_movies_recycler_view)
+        popularMoviesRecyclerView = view.findViewById(R.id.movies_recycler_view)
 
         popularMoviesRecyclerView.layoutManager =  LinearLayoutManager(context)
 
-
         popularMoviesViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
-                popularMoviesAdapter = PopularMoviesAdapter(it)
+                popularMoviesAdapter = MoviesAdapter(it)
                 popularMoviesRecyclerView.adapter = popularMoviesAdapter
         })
+
+
     }
 
-    class PopularMoviesAdapter (private val popularMovies:List<Movie>) :
-        RecyclerView.Adapter<PopularMoviesAdapter.PopularMoviesViewHolder>() {
+    class MoviesAdapter (private val movies:List<Movie>) :
+        RecyclerView.Adapter<MoviesAdapter.PopularMoviesViewHolder>() {
 
-        inner class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-          val movieTitleTextView = itemView.findViewById<TextView>(R.id.movie_title)
-          val movieRatingTextView = itemView.findViewById<TextView>(R.id.movie_rating)
-          val movieReleaseDateTextView = itemView.findViewById<TextView>(R.id.movie_release_date)
-          val movieLanguageTextView = itemView.findViewById<TextView>(R.id.movie_language)
-          val movieImageView = itemView.findViewById<ImageView>(R.id.movie_image_view)
-          val moviewFavoriteImageView = itemView.findViewById<ImageView>(R.id.movie_favorite_image_view)
+        inner class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+            private val movieTitleTextView: TextView = itemView.findViewById(R.id.movie_title_text_view)
+            private val movieRatingTextView: TextView = itemView.findViewById(R.id.movie_rating)
+            private val movieReleaseDateTextView: TextView = itemView.findViewById(R.id.movie_release_date)
+            private val movieLanguageTextView: TextView = itemView.findViewById(R.id.movie_language)
+            private val movieImageView: ImageView = itemView.findViewById(R.id.movie_image_view)
 
-          fun bind(movie: Movie) {
-              movieTitleTextView.text = movie.title
-              movieRatingTextView.text = "${movie.vote_average}/10"
-              movieReleaseDateTextView.text = movie.release_date
-              movieLanguageTextView.text = movie.original_language
+            init {
+                itemView.setOnClickListener(this)
+            }
 
-              val url = "https://image.tmdb.org/t/p/w500".plus(movie.poster_path)
+            @SuppressLint("SetTextI18n")
+            fun bind(movie: Movie) {
+                movieTitleTextView.text = movie.title
+                movieRatingTextView.text = "${movie.vote_average}/10"
+                movieReleaseDateTextView.text = movie.release_date
+                movieLanguageTextView.text = movie.original_language
 
-              Picasso.get()
-                  .load(url)
-                  .placeholder(R.drawable.ic_loading)
-                  .into(movieImageView)
-          }
+                val url = "https://image.tmdb.org/t/p/w500".plus(movie.poster_path)
+
+                Picasso.get()
+                    .load(url)
+                    .placeholder(R.drawable.ic_loading)
+                    .into(movieImageView)
+            }
+
+            override fun onClick(item: View?) {
+                val movie = movies[adapterPosition]
+                Utils.setMovieDataForIntent(movie.id)
+                callback.onMovieClicked()
+            }
 
         }
 
@@ -85,12 +109,15 @@ class PopularMoviesFragment () : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return popularMovies.size
+            return movies.size
         }
 
         override fun onBindViewHolder(holder: PopularMoviesViewHolder, position: Int) {
-            val movie = popularMovies[holder.adapterPosition]
+            val movie = movies[holder.adapterPosition]
             holder.bind(movie)
         }
     }
+
+
+
 }
