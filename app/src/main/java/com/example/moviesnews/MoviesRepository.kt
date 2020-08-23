@@ -33,137 +33,35 @@ class MoviesRepository {
 
 
     //this function is for fetching popular movies
-    fun getPopularMovies () : LiveData<List<Movie>> {
+    suspend fun getPopularMovies () :List<Movie> = movieApi.getPopularMovies().results
 
-        val responseLiveData = MutableLiveData<List<Movie>>()
-        val popularMoviesRequest = movieApi.getPopularMovies()
-
-        popularMoviesRequest.enqueue(object : Callback<MovieResponse>{
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Log.i(TAG, "onFailure: ${t.message.toString()}")
-            }
-
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                val moviesResponseList : List<Movie>? = response.body()?.results
-                responseLiveData.value = moviesResponseList
-            }
-        })
-        return responseLiveData
-    }
 
     //this function is for fetching top rated movies
-    fun getTopRatedMovies () : LiveData<List<Movie>> {
-
-        val responseLiveData = MutableLiveData<List<Movie>>()
-        val popularMoviesRequest = movieApi.getTopRatedMovies()
-
-        popularMoviesRequest.enqueue(object : Callback<MovieResponse>{
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Log.i(TAG, "onFailure: ${t.message.toString()}")
-            }
-
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                val moviesResponseList : List<Movie>? = response.body()?.results
-                responseLiveData.value = moviesResponseList
-            }
-        })
-        return responseLiveData
-    }
+    suspend fun getTopRatedMovies () : List<Movie> = movieApi.getTopRatedMovies().results
 
     //this function is for fetching upcoming movies
-    fun getUpComingMovies () : LiveData<List<Movie>> {
-
-        val responseLiveData = MutableLiveData<List<Movie>>()
-        val popularMoviesRequest = movieApi.getUpComingMovies()
-
-        popularMoviesRequest.enqueue(object : Callback<MovieResponse>{
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Log.i(TAG, "onFailure: ${t.message.toString()}")
-            }
-
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                val moviesResponseList : List<Movie>? = response.body()?.results
-                responseLiveData.value = moviesResponseList
-            }
-        })
-        return responseLiveData
-    }
+    suspend fun getUpComingMovies () : List<Movie> = movieApi.getUpComingMovies().results
 
     //to get a movies details
-    fun getMovieDetails() : LiveData<DetailedMovie> {
-        val responseLiveData = MutableLiveData<DetailedMovie>()
-        val moviesRequest = movieApi.getMovieDetails(Utils.itemId)
-        moviesRequest.enqueue(object : Callback<DetailedMovie> {
-            override fun onFailure(call: Call<DetailedMovie>, t: Throwable) {
-                Log.i(TAG, "onFailure: ${t.message.toString()}")
-            }
+    suspend fun getMovieDetails() : DetailedMovie =  movieApi.getMovieDetails(Utils.itemId)
 
-            override fun onResponse(call: Call<DetailedMovie>, response: Response<DetailedMovie>) {
-                 detailedMovie = response.body()!!
-                responseLiveData.value = detailedMovie
-                Log.i(TAG, "onResponse: $detailedMovie")
-            }
-        })
-
-        return responseLiveData
-    }
 
     //this function is for fetching  movie recommendations
-    fun getMovieRecommendations () : LiveData<List<Movie>> {
-
-        val responseLiveData = MutableLiveData<List<Movie>>()
-        val recommendedMoviesRequest = movieApi.getMovieRecommendations(Utils.itemId)
-
-        recommendedMoviesRequest.enqueue(object : Callback<MovieResponse>{
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Log.i(TAG, "onFailure: ${t.message.toString()}")
-            }
-
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                Log.i(TAG, "onResponse: ${response.body()?.results}")
-                val moviesResponseList : List<Movie>? = response.body()?.results
-                responseLiveData.value = moviesResponseList
-            }
-        })
-        return responseLiveData
-    }
+    suspend fun getMovieRecommendations () : List<Movie> = movieApi.getMovieRecommendations(Utils.itemId).results
 
     //movieTrailer
-    fun getMovieTrailer () : MutableLiveData<List<Result>> {
-        val trailerMovieRequest = movieApi.getMovieTrailer(Utils.itemId)
-        val responseLiveData = MutableLiveData<List<Result>>()
-
-        var key = ""
-        trailerMovieRequest.enqueue(object : Callback<MovieTrailerModel> {
-            override fun onFailure(call: Call<MovieTrailerModel>, t: Throwable) {
-                Log.i(TAG, "onFailure: ${t.message.toString()}")
-            }
-
-            override fun onResponse(
-                call: Call<MovieTrailerModel>,
-                response: Response<MovieTrailerModel>
-            ) {
-                responseLiveData.value = response.body()?.results
-                Log.i(TAG, "HAHA onResponse: ${response.body()?.results?.size}")
-            }
-        })
-
-        return responseLiveData
-    }
+    suspend fun getMovieTrailer () : List<Result>  = movieApi.getMovieTrailer(Utils.itemId).results
 
     //to get a movies details
-    suspend fun getFavoriteMovies(movieId:Int) : DetailedMovie {
-        return movieApi.getFav(movieId)
-    }
+    suspend fun getFavoriteMovies(movieId:Int) : DetailedMovie  =  movieApi.getFav(movieId)
+
 
     /*
         Database working
      */
 
-    private val executor = Executors.newSingleThreadExecutor()
 
     private val movieDao = getDbInstance().getMovieDao()
-
 
     suspend fun getMovies() : List<Model> = movieDao.getMovies()
     var movie:Model? = null
@@ -174,10 +72,6 @@ class MoviesRepository {
     suspend fun deleteMovie(model: Model) = movieDao.deleteMovie(model)
 
     suspend fun updateMovie(model: Model) = movieDao.updateMovie(model)
-
-
-
-
 
     //to het a database instance
     companion object{
