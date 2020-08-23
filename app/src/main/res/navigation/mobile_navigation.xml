@@ -9,13 +9,25 @@
         android:label="PopularMoviesFragment" >
         <action
             android:id="@+id/action_popularMoviesFragment_to_topRatedMoviesFragment"
-            app:destination="@id/topRatedMoviesFragment" />
+            app:destination="@id/topRatedMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right" />
         <action
             android:id="@+id/action_popularMoviesFragment_to_favoriteMoviesFragment"
-            app:destination="@id/favoriteMoviesFragment" />
+            app:destination="@id/favoriteMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
         <action
             android:id="@+id/action_popularMoviesFragment_to_upComingMoviesFragment"
-            app:destination="@id/upComingMoviesFragment" />
+            app:destination="@id/upComingMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
     </fragment>
     <fragment
         android:id="@+id/topRatedMoviesFragment"
@@ -23,10 +35,18 @@
         android:label="TopRatedMoviesFragment" >
         <action
             android:id="@+id/action_topRatedMoviesFragment_to_popularMoviesFragment"
-            app:destination="@id/popularMoviesFragment" />
+            app:destination="@id/popularMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
         <action
             android:id="@+id/action_topRatedMoviesFragment_to_upComingMoviesFragment"
-            app:destination="@id/upComingMoviesFragment" />
+            app:destination="@id/upComingMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
     </fragment>
     <fragment
         android:id="@+id/upComingMoviesFragment"
@@ -34,13 +54,25 @@
         android:label="UpComingMoviesFragment" >
         <action
             android:id="@+id/action_upComingMoviesFragment_to_topRatedMoviesFragment"
-            app:destination="@id/topRatedMoviesFragment" />
+            app:destination="@id/topRatedMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
         <action
             android:id="@+id/action_upComingMoviesFragment_to_favoriteMoviesFragment"
-            app:destination="@id/favoriteMoviesFragment" />
+            app:destination="@id/favoriteMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
         <action
             android:id="@+id/action_upComingMoviesFragment_to_popularMoviesFragment"
-            app:destination="@id/popularMoviesFragment" />
+            app:destination="@id/popularMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
     </fragment>
     <fragment
         android:id="@+id/favoriteMoviesFragment"
@@ -48,9 +80,17 @@
         android:label="FavoriteMoviesFragment" >
         <action
             android:id="@+id/action_favoriteMoviesFragment_to_upComingMoviesFragment"
-            app:destination="@id/upComingMoviesFragment" />
+            app:destination="@id/upComingMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
         <action
             android:id="@+id/action_favoriteMoviesFragment_to_popularMoviesFragment"
-            app:destination="@id/popularMoviesFragment" />
+            app:destination="@id/popularMoviesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"/>
     </fragment>
 </navigation>
