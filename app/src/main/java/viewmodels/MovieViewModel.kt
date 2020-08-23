@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.moviesnews.*
+import models.DetailedMovie
+import models.Movie
+import models.Result
 
 class MovieViewModel : ViewModel() {
     private val moviesRepository = MoviesRepository()

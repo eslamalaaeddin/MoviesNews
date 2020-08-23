@@ -1,4 +1,4 @@
-package com.example.moviesnews
+package models
 
 data class MovieTrailerModel (val id:Int, val results:List<Result>)
 

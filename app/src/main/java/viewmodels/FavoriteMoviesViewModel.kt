@@ -3,7 +3,7 @@ package viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.example.moviesnews.DetailedMovie
+import models.DetailedMovie
 import com.example.moviesnews.MoviesRepository
 
 class FavoriteMoviesViewModel : ViewModel() {

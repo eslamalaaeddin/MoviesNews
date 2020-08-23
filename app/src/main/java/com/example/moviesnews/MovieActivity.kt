@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +23,9 @@ import fragments.callback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import models.DetailedMovie
+import models.Model
+import models.Movie
 import viewmodels.MovieViewModel
 
 private const val TAG = "MovieActivity"
@@ -32,7 +34,7 @@ class MovieActivity : AppCompatActivity() {
     private lateinit var recommendedMoviesAdapter: MoviesAdapter
     private lateinit var recommendationsRecyclerView: RecyclerView
 
-    private  var movie:DetailedMovie ?= null
+    private  var movie: DetailedMovie?= null
     private lateinit var model: Model
 
     private lateinit var backPosterImageView: ImageView
@@ -48,7 +50,7 @@ class MovieActivity : AppCompatActivity() {
     private lateinit var moreAboutButton: Button
 
     var inDb = false
-    var returned:Model? = null
+    var returned: Model? = null
     private var key = ""
 
     private var movieId = 0

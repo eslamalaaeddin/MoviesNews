@@ -1,7 +1,8 @@
 package api
 
-import com.example.moviesnews.*
-import retrofit2.Call
+import models.DetailedMovie
+import models.MovieResponse
+import models.MovieTrailerModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 private const val apiKey ="7882262c37362758b7e07865fb261576"
@@ -10,24 +11,24 @@ interface MovieApi  {
 
 
     @GET("popular?api_key=$apiKey")
-    suspend fun getPopularMovies():MovieResponse
+    suspend fun getPopularMovies(): MovieResponse
 
     @GET("top_rated?api_key=$apiKey")
-    suspend fun getTopRatedMovies():MovieResponse
+    suspend fun getTopRatedMovies(): MovieResponse
 
     @GET("upcoming?api_key=$apiKey")
-    suspend fun getUpComingMovies():MovieResponse
+    suspend fun getUpComingMovies(): MovieResponse
 
     @GET("{movie_id}?api_key=$apiKey")
-    suspend fun getMovieDetails( @Path ("movie_id") id:Int):DetailedMovie
+    suspend fun getMovieDetails( @Path ("movie_id") id:Int): DetailedMovie
 
     @GET("{movie_id}/recommendations?api_key=$apiKey")
-    suspend fun getMovieRecommendations( @Path ("movie_id") id:Int):MovieResponse
+    suspend fun getMovieRecommendations( @Path ("movie_id") id:Int): MovieResponse
 
     @GET("{movie_id}/videos?api_key=$apiKey")
-    suspend fun getMovieTrailer(@Path("movie_id")id:Int):MovieTrailerModel
+    suspend fun getMovieTrailer(@Path("movie_id")id:Int): MovieTrailerModel
 
     @GET("{movie_id}?api_key=$apiKey")
-   suspend fun getFav( @Path ("movie_id") id:Int):DetailedMovie
+   suspend fun getFav( @Path ("movie_id") id:Int): DetailedMovie
 
 }

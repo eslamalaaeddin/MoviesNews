@@ -1,19 +1,15 @@
 package com.example.moviesnews
 
 import android.content.Context
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import api.MovieApi
 import database.MovieDatabase
-import fragments.FavoriteMoviesFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import models.DetailedMovie
+import models.Model
+import models.Movie
+import models.Result
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.Executors
 
 const val BASE_URL = "https://api.themoviedb.org/3/movie/"
 private const val TAG = "MoviesRepository"
@@ -53,7 +49,7 @@ class MoviesRepository {
     suspend fun getMovieTrailer () : List<Result>  = movieApi.getMovieTrailer(Utils.itemId).results
 
     //to get a movies details
-    suspend fun getFavoriteMovies(movieId:Int) : DetailedMovie  =  movieApi.getFav(movieId)
+    suspend fun getFavoriteMovies(movieId:Int) : DetailedMovie =  movieApi.getFav(movieId)
 
 
     /*
@@ -64,7 +60,7 @@ class MoviesRepository {
     private val movieDao = getDbInstance().getMovieDao()
 
     suspend fun getMovies() : List<Model> = movieDao.getMovies()
-    var movie:Model? = null
+    var movie: Model? = null
     suspend fun getMovie(movieId:Int) : Model = movieDao.getMovie(movieId)
 
     suspend fun insertMovie(model: Model) = movieDao.insertMovie(model)

@@ -1,7 +1,6 @@
 package fragments
 
 import android.annotation.SuppressLint
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,9 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.*
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import models.DetailedMovie
 import viewmodels.FavoriteMoviesViewModel
 
 private const val TAG = "FavoriteMoviesFragment"
