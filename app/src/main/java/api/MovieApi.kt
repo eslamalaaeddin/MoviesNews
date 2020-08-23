@@ -10,23 +10,24 @@ interface MovieApi  {
 
 
     @GET("popular?api_key=$apiKey")
-    fun getPopularMovies():Call<MovieResponse>
+    suspend fun getPopularMovies():MovieResponse
 
     @GET("top_rated?api_key=$apiKey")
-    fun getTopRatedMovies():Call<MovieResponse>
+    suspend fun getTopRatedMovies():MovieResponse
 
     @GET("upcoming?api_key=$apiKey")
-    fun getUpComingMovies():Call<MovieResponse>
+    suspend fun getUpComingMovies():MovieResponse
 
     @GET("{movie_id}?api_key=$apiKey")
-    fun getMovieDetails( @Path ("movie_id") id:Int):Call<DetailedMovie>
+    suspend fun getMovieDetails( @Path ("movie_id") id:Int):DetailedMovie
 
     @GET("{movie_id}/recommendations?api_key=$apiKey")
-    fun getMovieRecommendations( @Path ("movie_id") id:Int):Call<MovieResponse>
+    suspend fun getMovieRecommendations( @Path ("movie_id") id:Int):MovieResponse
 
     @GET("{movie_id}/videos?api_key=$apiKey")
-    fun getMovieTrailer(@Path("movie_id")id:Int):Call<MovieTrailerModel>
+    suspend fun getMovieTrailer(@Path("movie_id")id:Int):MovieTrailerModel
 
-
+    @GET("{movie_id}?api_key=$apiKey")
+   suspend fun getFav( @Path ("movie_id") id:Int):DetailedMovie
 
 }
