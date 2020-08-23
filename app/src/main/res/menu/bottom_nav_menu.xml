@@ -2,9 +2,9 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <item android:title="Popular" android:id="@+id/popularMoviesFragment" android:icon="@drawable/ic_popular"/>
+        <item android:title="Popular" android:id="@+id/popularMoviesFragment" android:icon="@drawable/ic_user"/>
         <item android:title="Top rated" android:id="@+id/topRatedMoviesFragment" android:icon="@drawable/ic_top_rated" />
-        <item android:title="Upcoming" android:id="@+id/upComingMoviesFragment" android:icon="@drawable/ic_come" />
+        <item android:title="Upcoming" android:id="@+id/upComingMoviesFragment" android:icon="@drawable/ic_popular" />
     <item android:title="Favorite"  android:id="@+id/favoriteMoviesFragment" android:icon="@drawable/ic_favorite"
         app:showAsAction="ifRoom"/>
 </menu>
