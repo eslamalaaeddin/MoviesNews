@@ -171,7 +171,7 @@ class MovieActivity : AppCompatActivity() {
                 var returned : Model = repository.getMovie(movieId)
 
                 if (returned != null) {
-                    returned = Model(movieId, 0)
+                   // returned = Model(movieId, 0)
                     repository.deleteMovie(returned)
                     favoriteImageView.setColorFilter(
                         ContextCompat.getColor(this@MovieActivity, R.color.unFavorite),
@@ -181,7 +181,6 @@ class MovieActivity : AppCompatActivity() {
                 else{
                     returned = Model(movieId, 1)
                     repository.insertMovie(returned)
-                    Log.i(TAG, "onCreate: INSERTED")
                     favoriteImageView.setColorFilter(
                         ContextCompat.getColor(this@MovieActivity, R.color.favorite),
                         android.graphics.PorterDuff.Mode.SRC_IN)
@@ -198,9 +197,6 @@ class MovieActivity : AppCompatActivity() {
         super.onStart()
         scope.launch {
             val returned : Model = repository.getMovie(Utils.itemId)
-
-            Log.i(TAG, "onStart: $movieId")
-            Log.i(TAG, "onStart: $returned")
 
             if (returned != null) {
 
@@ -219,10 +215,6 @@ class MovieActivity : AppCompatActivity() {
 
 
     }
-
-
-
-
 
     class MoviesAdapter(private val movies: List<Movie>) :
         RecyclerView.Adapter<MoviesAdapter.PopularMoviesViewHolder>() {
