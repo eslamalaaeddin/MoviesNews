@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:id="@+id/bottom_nav"
-            app:itemIconTint="#E53935"
+            app:itemIconTint="#F44643"
             app:itemHorizontalTranslationEnabled="true"
-            app:itemTextColor="#E53935"
+            app:itemTextColor="#F44643"
             android:background="#232323"
             android:layout_gravity="center|bottom"
             app:menu="@menu/bottom_nav_menu" />

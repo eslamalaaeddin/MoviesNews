@@ -41,11 +41,11 @@
             android:id="@+id/back_poster_image_view"
             android:layout_width="0dp"
             android:layout_height="196dp"
-            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/fearless_back" />
+            android:scaleType="fitXY"
+            tools:srcCompat="@drawable/ic_loading" />
 
     <ImageView
         android:id="@+id/front_poster_image_view"
@@ -54,7 +54,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/back_poster_image_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back_poster_image_view"
-        tools:srcCompat="@drawable/fearless" />
+        android:scaleType="centerInside"
+        tools:srcCompat="@drawable/ic_loading" />
 
     <TextView
         android:id="@+id/movie_title_text_view"
@@ -80,7 +81,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_favorite"
         tools:ignore="VectorDrawableCompat"
-        app:tint="#C0CA33" />
+        />
 
     <Button
         android:id="@+id/watch_trailer_button"
@@ -148,7 +149,7 @@
         app:layout_constraintTop_toBottomOf="@+id/watch_trailer_button" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular_movies_recycler_view"
+            android:id="@+id/movies_recycler_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

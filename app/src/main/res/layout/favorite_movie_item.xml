@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="136dp"
         android:layout_height="180dp"
-        android:scaleType="fitXY"
+        android:scaleType="centerInside"
         tools:src="@drawable/fearless"
         android:id="@+id/movie_image_view"
         android:layout_gravity="center"
