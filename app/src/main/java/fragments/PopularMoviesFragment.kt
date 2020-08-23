@@ -3,6 +3,7 @@ package fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,8 +60,8 @@ class PopularMoviesFragment () : Fragment() {
         popularMoviesRecyclerView.layoutManager =  LinearLayoutManager(context)
 
         popularMoviesViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
-                popularMoviesAdapter = MoviesAdapter(it)
-                popularMoviesRecyclerView.adapter = popularMoviesAdapter
+            popularMoviesAdapter = MoviesAdapter(it.shuffled())
+            popularMoviesRecyclerView.adapter = popularMoviesAdapter
         })
 
 

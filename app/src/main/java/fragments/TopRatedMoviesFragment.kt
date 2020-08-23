@@ -1,15 +1,19 @@
 package fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.R
+import com.example.moviesnews.Utils
 import viewmodels.TopRatedMoviesViewModel
 
 private const val TAG = "TopRatedMoviesFragment"
@@ -33,6 +37,7 @@ class TopRatedMoviesFragment : Fragment() {
         return generalView
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,10 +45,18 @@ class TopRatedMoviesFragment : Fragment() {
 
         topRatedMoviesRecyclerView.layoutManager =  LinearLayoutManager(context)
 
-        topRatedMoviesViewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner, Observer {
-            topRatedMoviesAdapter = PopularMoviesFragment.MoviesAdapter(it)
-            topRatedMoviesRecyclerView.adapter = topRatedMoviesAdapter
-        })
+        //to check the network connection
+        if (Utils.checkConnectivity(requireContext())) {
+            topRatedMoviesViewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner, Observer {
+                topRatedMoviesAdapter = PopularMoviesFragment.MoviesAdapter(it.shuffled())
+                topRatedMoviesRecyclerView.adapter = topRatedMoviesAdapter
+            })
+        }
+
+        else{
+            Toast.makeText(requireContext(), "No internet connection!", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 

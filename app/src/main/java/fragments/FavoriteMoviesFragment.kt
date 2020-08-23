@@ -1,6 +1,7 @@
 package fragments
 
 import android.annotation.SuppressLint
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.*
@@ -16,22 +19,17 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import viewmodels.FavoriteMoviesViewModel
 
 private const val TAG = "FavoriteMoviesFragment"
 class FavoriteMoviesFragment : Fragment() {
     private lateinit var favoriteMoviesAdapter: MoviesAdapter
     private lateinit var favoriteMoviesRecyclerView: RecyclerView
+    private lateinit var favoriteMoviesViewModel: FavoriteMoviesViewModel
 
-   // private lateinit var favoriteMoviesViewModel: FavoriteMoviesViewModel
-
-    val favoriteList = mutableListOf<Model>()
-    var favoriteMovies = mutableListOf<DetailedMovie>()
-    private val repo = MoviesRepository()
-    val scope = CoroutineScope(Dispatchers.Main)
-    private var postsList = mutableListOf<DetailedMovie>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       // favoriteMoviesViewModel = ViewModelProviders.of(this).get(FavoriteMoviesViewModel::class.java)
+        favoriteMoviesViewModel = ViewModelProviders.of(this).get(FavoriteMoviesViewModel::class.java)
     }
 
     private lateinit var generalView: View
@@ -46,43 +44,24 @@ class FavoriteMoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         favoriteMoviesRecyclerView = view.findViewById(R.id.movies_recycler_view)
         favoriteMoviesRecyclerView.layoutManager =  GridLayoutManager(context,2)
 
-        Log.i(TAG, "onViewCreated: ")
 
     }
+
+
 
     override fun onStart() {
         super.onStart()
-        Log.i(TAG, "onStart: ")
-        scope.launch {
-            favoriteList.clear()
-            postsList.clear()
-            favoriteList.addAll(repo.getMovies())
-            postsList.addAll(getFavoriteMovies(favoriteList))
-            favoriteMoviesAdapter = MoviesAdapter(postsList.distinct())
+
+        favoriteMoviesViewModel.favoriteMoviesLiveData.observe(viewLifecycleOwner, Observer {
+            Log.i(TAG, "onStart: ${it.size}")
+            favoriteMoviesAdapter = MoviesAdapter(it)
             favoriteMoviesRecyclerView.adapter = favoriteMoviesAdapter
+        })
 
-        }
     }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i(TAG, "onStop: ")
-        favoriteList.clear()
-        postsList.clear()
-    }
-
-    private suspend fun getFavoriteMovies (models:List<Model>) : List<DetailedMovie>  {
-        for (element in models) {
-                favoriteMovies.add(repo.getFavoriteMovies(element.movieId))
-        }
-
-       return favoriteMovies
-    }
-
 
     class MoviesAdapter(private val movies: List<DetailedMovie>) :
         RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {

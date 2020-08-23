@@ -42,7 +42,7 @@ class UpComingMoviesFragment : Fragment() {
         upComingMoviesRecyclerView.layoutManager =  LinearLayoutManager(context)
 
         upComingMoviesViewModel.upComingMoviesLiveData.observe(viewLifecycleOwner, Observer {
-            upComingMoviesAdapter = PopularMoviesFragment.MoviesAdapter(it)
+            upComingMoviesAdapter = PopularMoviesFragment.MoviesAdapter(it.shuffled())
             upComingMoviesRecyclerView.adapter = upComingMoviesAdapter
         })
     }
