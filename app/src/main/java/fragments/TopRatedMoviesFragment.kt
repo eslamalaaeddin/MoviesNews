@@ -45,17 +45,11 @@ class TopRatedMoviesFragment : Fragment() {
 
         topRatedMoviesRecyclerView.layoutManager =  LinearLayoutManager(context)
 
-        //to check the network connection
-        if (Utils.checkConnectivity(requireContext())) {
             topRatedMoviesViewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner, Observer {
                 topRatedMoviesAdapter = PopularMoviesFragment.MoviesAdapter(it.shuffled())
                 topRatedMoviesRecyclerView.adapter = topRatedMoviesAdapter
             })
-        }
 
-        else{
-            Toast.makeText(requireContext(), "No internet connection!", Toast.LENGTH_SHORT).show()
-        }
 
     }
 
