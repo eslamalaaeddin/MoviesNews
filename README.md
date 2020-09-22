@@ -28,9 +28,6 @@ Picasso
 # Screen shots: 
 ---
 
-<p align="center">
- <img src = "images/popular.jpg" width = "512">
-</p>
 
 <p align="center">
  <img src = "images/onward.jpg" width = "512">
