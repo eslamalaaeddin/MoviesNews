@@ -14,8 +14,8 @@ import models.DetailedMovie
 import ui.fragments.callback
 
 
-    class FavoriteMoviesAdapter(private val movies: List<DetailedMovie>) :
-        RecyclerView.Adapter<FavoriteMoviesAdapter.MoviesViewHolder>() {
+    class DbMoviesAdapter(private val movies: List<DetailedMovie>) :
+        RecyclerView.Adapter<DbMoviesAdapter.MoviesViewHolder>() {
 
         inner class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
             private val movieImageView: ImageView = itemView.findViewById(R.id.movie_image_view)

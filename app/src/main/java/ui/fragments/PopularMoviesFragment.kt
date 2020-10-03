@@ -1,6 +1,6 @@
 package ui.fragments
 
-import adapters.MoviesAdapter
+import adapters.ApiMoviesAdapter
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.Callback
 import com.example.moviesnews.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +21,7 @@ lateinit var callback: Callback
 class PopularMoviesFragment () : Fragment() {
     private lateinit var generalView: View
     private val popularMoviesViewModel: PopularMoviesViewModel by viewModels()
-    private var popularMoviesAdapter: MoviesAdapter = MoviesAdapter(emptyList())
+    private var popularMoviesAdapter: ApiMoviesAdapter = ApiMoviesAdapter(emptyList())
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,7 +42,7 @@ class PopularMoviesFragment () : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         popularMoviesViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
-            popularMoviesAdapter = MoviesAdapter(it.shuffled())
+            popularMoviesAdapter = ApiMoviesAdapter(it.shuffled())
             movies_recycler_view.adapter = popularMoviesAdapter
         })
 

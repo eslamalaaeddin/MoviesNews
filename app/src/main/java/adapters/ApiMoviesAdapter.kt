@@ -15,10 +15,10 @@ import models.Movie
 import ui.fragments.callback
 
 
-class MoviesAdapter (private val movies:List<Movie>) :
-        RecyclerView.Adapter<MoviesAdapter.PopularMoviesViewHolder>() {
+class ApiMoviesAdapter (private val movies:List<Movie>) :
+        RecyclerView.Adapter<ApiMoviesAdapter.MoviesViewHolder>() {
 
-        inner class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        inner class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
             private val movieTitleTextView: TextView = itemView.findViewById(R.id.movie_title_text_view)
             private val movieRatingTextView: TextView = itemView.findViewById(R.id.movie_rating)
             private val movieReleaseDateTextView: TextView = itemView.findViewById(R.id.movie_release_date)
@@ -52,16 +52,16 @@ class MoviesAdapter (private val movies:List<Movie>) :
 
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMoviesViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
             val cardView = LayoutInflater.from(parent.context).inflate(R.layout.movie_item,parent,false) as CardView
-            return PopularMoviesViewHolder(cardView)
+            return MoviesViewHolder(cardView)
         }
 
         override fun getItemCount(): Int {
             return movies.size
         }
 
-        override fun onBindViewHolder(holder: PopularMoviesViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
             val movie = movies[holder.adapterPosition]
             holder.bind(movie)
         }

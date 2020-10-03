@@ -1,6 +1,6 @@
 package ui.fragments
 
-import adapters.MoviesAdapter
+import adapters.ApiMoviesAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_movies_rated_top.*
@@ -21,7 +18,7 @@ private const val TAG = "TopRatedMoviesFragment"
 class TopRatedMoviesFragment : Fragment() {
     private lateinit var generalView: View
     private val topRatedMoviesViewModel : TopRatedMoviesViewModel by viewModels()
-    private var topRatedMoviesAdapter: MoviesAdapter = MoviesAdapter(emptyList())
+    private var topRatedMoviesAdapter: ApiMoviesAdapter = ApiMoviesAdapter(emptyList())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,15 +29,11 @@ class TopRatedMoviesFragment : Fragment() {
         return generalView
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
             topRatedMoviesViewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner, Observer {
-                topRatedMoviesAdapter = MoviesAdapter(it.shuffled())
+                topRatedMoviesAdapter = ApiMoviesAdapter(it.shuffled())
                 movies_recycler_view.adapter = topRatedMoviesAdapter
             })
     }
-
-
 }
