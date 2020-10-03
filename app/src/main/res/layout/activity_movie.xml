@@ -162,7 +162,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recommendations_text_view" />
 
     <TextView
-        android:id="@+id/moview_rating_text_view"
+        android:id="@+id/movie_rating_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="8.1"

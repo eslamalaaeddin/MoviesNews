@@ -12,10 +12,6 @@ import models.Result
 import java.security.AccessController.getContext
 import javax.inject.Inject
 
-const val BASE_URL = "https://api.themoviedb.org/3/movie/"
-private const val TAG = "MoviesRepository"
-private const val DATABASE_NAME = "movie-database"
-
 private val movieDao = RoomModule.getRoomDbInstance(MoviesRepository.getContext()).getMovieDao()
 
 private val movieApi = RetrofitModule.getMovieApi()
@@ -23,7 +19,7 @@ private val movieApi = RetrofitModule.getMovieApi()
 class MoviesRepository @Inject constructor() {
 
     /*
-      Networking working
+      Networking stuff
    */
 
     suspend fun getPopularMovies () :List<Movie> = movieApi.getPopularMovies().results
@@ -42,12 +38,11 @@ class MoviesRepository @Inject constructor() {
 
 
     /*
-        Database working
+        Database stuff
      */
 
-
     suspend fun getMovies() : List<Model> = movieDao.getMovies()
-    var movie: Model? = null
+
     suspend fun getMovie(movieId:Int) : Model = movieDao.getMovie(movieId)
 
     suspend fun insertMovie(model: Model) = movieDao.insertMovie(model)

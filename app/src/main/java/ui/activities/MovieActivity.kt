@@ -1,5 +1,6 @@
 package ui.activities
 
+import adapters.RecommendedMoviesAdapter
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -22,6 +24,8 @@ import com.example.moviesnews.MoviesRepository
 import com.example.moviesnews.R
 import com.example.moviesnews.Utils
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_movie.*
 import ui.fragments.callback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,105 +34,41 @@ import models.DetailedMovie
 import models.Model
 import models.Movie
 import viewmodels.MovieViewModel
+import javax.inject.Inject
 
 private const val TAG = "MovieActivity"
+@AndroidEntryPoint
 class MovieActivity : AppCompatActivity() {
-    private lateinit var movieViewModel: MovieViewModel
-    private lateinit var recommendedMoviesAdapter: MoviesAdapter
-    private lateinit var recommendationsRecyclerView: RecyclerView
+    private val movieViewModel: MovieViewModel by viewModels()
+    private lateinit var recommendedMoviesAdapter: RecommendedMoviesAdapter
 
-    private  var movie: DetailedMovie?= null
-    private lateinit var model: Model
-
-    private lateinit var backPosterImageView: ImageView
-    private lateinit var frontPosterImageView: ImageView
-    private lateinit var favoriteImageView: ImageView
-    private lateinit var movieTitleTextView:TextView
-    private lateinit var movieReleaseDateTextView:TextView
-    private lateinit var movieDurationTextView:TextView
-    private lateinit var movieOverviewTextView:TextView
-    private lateinit var movieRatingTextView:TextView
-
-    private lateinit var watchTrailerButton:Button
-    private lateinit var moreAboutButton: Button
-
-    var inDb = false
-    var returned: Model? = null
     private var key = ""
-
     private var movieId = 0
-    private var frontPosterPath = ""
     private var frontPosterUrl = ""
-    private var backPosterPath = ""
     private var backPosterUrl = ""
-    private var title = ""
-    private var releaseDate = ""
-    private var overview = ""
     private var homePage = ""
-    private var rating = 0.0
-    private var duration = 0
 
-    val repository = MoviesRepository()
+    @Inject lateinit var repository : MoviesRepository
 
-    val scope = CoroutineScope(Dispatchers.Main)
+    private val scope = CoroutineScope(Dispatchers.Main)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
-        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-
-        backPosterImageView = findViewById(R.id.back_poster_image_view)
-        frontPosterImageView = findViewById(R.id.front_poster_image_view)
-        favoriteImageView = findViewById(R.id.favorite_image_view)
-        movieTitleTextView = findViewById(R.id.movie_title_text_view)
-        movieReleaseDateTextView = findViewById(R.id.movie_release_date_text_view)
-        movieDurationTextView = findViewById(R.id.movie_duration_text_view)
-        movieOverviewTextView = findViewById(R.id.movie_overview_text_view)
-        movieRatingTextView = findViewById(R.id.moview_rating_text_view)
-        watchTrailerButton = findViewById(R.id.watch_trailer_button)
-        moreAboutButton = findViewById(R.id.more_about_button)
 
         //recycler view
-        recommendationsRecyclerView = findViewById(R.id.movies_recycler_view)
-        recommendationsRecyclerView.layoutManager =
+        movies_recycler_view.layoutManager =
             LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+
         //to get the movie details
-        movieViewModel.detailedMovieLiveData.observe(this , Observer {
-            movieId = it.id
-            backPosterPath = it.backdrop_path
-            frontPosterPath = it.poster_path
-            title = it.title
-            homePage = it.homepage
-            rating = it.vote_average
-            overview = it.overview
-            releaseDate = it.release_date
-            duration = it.runtime
+        getMovieInfo()
 
-
-            frontPosterUrl = "https://image.tmdb.org/t/p/w500".plus(frontPosterPath)
-            backPosterUrl  = "https://image.tmdb.org/t/p/w500".plus(backPosterPath)
-
-            movieTitleTextView.text = title
-            movieRatingTextView.text = rating.toString()
-            movieReleaseDateTextView.text = releaseDate
-            movieDurationTextView.text = "$duration minutes"
-            movieOverviewTextView.text = overview
-
-            Picasso.get()
-                .load(frontPosterUrl)
-                .placeholder(R.drawable.ic_loading)
-                .into(frontPosterImageView)
-
-            Picasso.get()
-                .load(backPosterUrl)
-                .placeholder(R.drawable.ic_loading)
-                .into(backPosterImageView)
-        })
         //to get a movie recommendations
         movieViewModel.recommendedMoviesLiveData.observe(this, Observer {
-            recommendedMoviesAdapter = MoviesAdapter(it)
-            recommendationsRecyclerView.adapter = recommendedMoviesAdapter
+            recommendedMoviesAdapter = RecommendedMoviesAdapter(it)
+            movies_recycler_view.adapter = recommendedMoviesAdapter
         })
+
         //to get the key for the trailer video
         movieViewModel.movieTrailersLiveData.observe(this, Observer {
             if (it.isNotEmpty()) {
@@ -140,7 +80,7 @@ class MovieActivity : AppCompatActivity() {
         })
 
         //open youtube
-        watchTrailerButton.setOnClickListener {
+        watch_trailer_button.setOnClickListener {
             if (key!="" && key!=null){
                 startActivity(
                     Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$key"))
@@ -153,7 +93,7 @@ class MovieActivity : AppCompatActivity() {
         }
 
         //open the movie's site
-        moreAboutButton.setOnClickListener {
+        more_about_button.setOnClickListener {
             if (homePage== null || homePage == "" ) {
                 Toast.makeText(this, "No homepage yet!", Toast.LENGTH_SHORT).show()
             }
@@ -170,7 +110,7 @@ class MovieActivity : AppCompatActivity() {
         }
 
         //favorite image view
-        favoriteImageView.setOnClickListener{
+        favorite_image_view.setOnClickListener{
 
             scope.launch {
                 var returned : Model = repository.getMovie(movieId)
@@ -178,7 +118,7 @@ class MovieActivity : AppCompatActivity() {
                 if (returned != null) {
                    // returned = Model(movieId, 0)
                     repository.deleteMovie(returned)
-                    favoriteImageView.setColorFilter(
+                    favorite_image_view.setColorFilter(
                         ContextCompat.getColor(this@MovieActivity, R.color.unFavorite),
                         android.graphics.PorterDuff.Mode.SRC_IN)
                     Toast.makeText(this@MovieActivity, "Removed from favorites.", Toast.LENGTH_SHORT).show()
@@ -186,7 +126,7 @@ class MovieActivity : AppCompatActivity() {
                 else{
                     returned = Model(movieId, 1)
                     repository.insertMovie(returned)
-                    favoriteImageView.setColorFilter(
+                    favorite_image_view.setColorFilter(
                         ContextCompat.getColor(this@MovieActivity, R.color.favorite),
                         android.graphics.PorterDuff.Mode.SRC_IN)
                     Toast.makeText(this@MovieActivity, "Added to favorites.", Toast.LENGTH_SHORT).show()
@@ -206,11 +146,11 @@ class MovieActivity : AppCompatActivity() {
             if (returned != null) {
 
             if (returned.favorite == 0) {
-                favoriteImageView.setColorFilter(
+                favorite_image_view.setColorFilter(
                     ContextCompat.getColor(this@MovieActivity, R.color.unFavorite),
                     android.graphics.PorterDuff.Mode.SRC_IN)
             } else {
-                favoriteImageView.setColorFilter(
+                favorite_image_view.setColorFilter(
                     ContextCompat.getColor(this@MovieActivity, R.color.favorite),
                     android.graphics.PorterDuff.Mode.SRC_IN)
             }
@@ -221,48 +161,32 @@ class MovieActivity : AppCompatActivity() {
 
     }
 
-    class MoviesAdapter(private val movies: List<Movie>) :
-        RecyclerView.Adapter<MoviesAdapter.PopularMoviesViewHolder>() {
+    @SuppressLint("SetTextI18n")
+    private fun getMovieInfo() {
+        movieViewModel.detailedMovieLiveData.observe(this , Observer { movie  ->
+            movieId = movie.id
+            homePage = movie.homepage
+            frontPosterUrl = "https://image.tmdb.org/t/p/w500".plus(movie.poster_path)
+            backPosterUrl  = "https://image.tmdb.org/t/p/w500".plus(movie.backdrop_path)
 
-        inner class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-            private val movieImageView: ImageView = itemView.findViewById(R.id.movie_image_view)
+            movie_title_text_view.text = movie.title
+            movie_rating_text_view.text = movie.vote_average.toString()
+            movie_release_date_text_view.text = movie.release_date
+            movie_duration_text_view.text = "${movie.runtime} minutes"
+            movie_overview_text_view.text = movie.overview
 
-            init {
-                itemView.setOnClickListener(this)
-            }
+            Picasso.get()
+                .load(frontPosterUrl)
+                .placeholder(R.drawable.ic_loading)
+                .into(front_poster_image_view)
 
-            @SuppressLint("SetTextI18n")
-            fun bind(movie: Movie) {
-
-                val url = "https://image.tmdb.org/t/p/w500".plus(movie.poster_path)
-
-                Picasso.get()
-                    .load(url)
-                    .placeholder(R.drawable.ic_loading)
-                    .into(movieImageView)
-            }
-
-            override fun onClick(item: View?) {
-                val movie = movies[adapterPosition]
-                Utils.setMovieDataForIntent(movie.id)
-                callback.onMovieClicked()
-            }
-
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMoviesViewHolder {
-            val cardView = LayoutInflater.from(parent.context).inflate(R.layout.recommended_movie_item,parent,false) as CardView
-            return PopularMoviesViewHolder(cardView)
-        }
-
-        override fun getItemCount(): Int {
-            return movies.size
-        }
-
-        override fun onBindViewHolder(holder: PopularMoviesViewHolder, position: Int) {
-            val movie = movies[holder.adapterPosition]
-            holder.bind(movie)
-        }
+            Picasso.get()
+                .load(backPosterUrl)
+                .placeholder(R.drawable.ic_loading)
+                .into(back_poster_image_view)
+        })
     }
+
+
 
 }

@@ -11,12 +11,12 @@ import com.example.moviesnews.R
 import com.example.moviesnews.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import viewmodels.PopularMoviesViewModel
 
 private const val ID = "id"
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), Callback {
-   lateinit var popularMoviesViewModel: PopularMoviesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,16 +25,12 @@ class MainActivity : AppCompatActivity(), Callback {
             .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
 
         val navController = host.navController
-
         setupBottomNavMenu(navController)
 
     }
 
     private fun setupBottomNavMenu(navController: NavController) {
-
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNav?.setupWithNavController(navController)
-
+        bottom_nav.setupWithNavController(navController)
     }
 
     override fun onMovieClicked() {
