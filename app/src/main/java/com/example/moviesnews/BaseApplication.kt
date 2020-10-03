@@ -11,6 +11,4 @@ class BaseApplication : Application() {
         MoviesRepository.provideContext(applicationContext)
     }
 
-
-
 }

@@ -14,10 +14,6 @@ object Utils {
         this.itemId = itemId
     }
 
-
-
-
-
      fun checkConnectivity(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
         return connectivityManager!!.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)?.state == NetworkInfo.State.CONNECTED ||

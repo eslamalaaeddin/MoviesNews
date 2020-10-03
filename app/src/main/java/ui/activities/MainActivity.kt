@@ -10,10 +10,11 @@ import com.example.moviesnews.Callback
 import com.example.moviesnews.R
 import com.example.moviesnews.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import viewmodels.PopularMoviesViewModel
 
 private const val ID = "id"
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), Callback {
    lateinit var popularMoviesViewModel: PopularMoviesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {

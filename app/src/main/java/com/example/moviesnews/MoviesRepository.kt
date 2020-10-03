@@ -9,22 +9,18 @@ import models.DetailedMovie
 import models.Model
 import models.Movie
 import models.Result
+import java.security.AccessController.getContext
 import javax.inject.Inject
 
 const val BASE_URL = "https://api.themoviedb.org/3/movie/"
 private const val TAG = "MoviesRepository"
 private const val DATABASE_NAME = "movie-database"
 
+private val movieDao = RoomModule.getRoomDbInstance(MoviesRepository.getContext()).getMovieDao()
 
+private val movieApi = RetrofitModule.getMovieApi()
 
-class MoviesRepository () {
-
-    private val movieDao = RoomModule.getRoomDbInstance(getContext()).getMovieDao()
-
-    private val movieApi:MovieApi = RetrofitModule.getMovieApi()
-
-//    @Inject lateinit var movieApi: MovieApi
-//    @Inject lateinit var movieDao: MovieDao
+class MoviesRepository @Inject constructor() {
 
     /*
       Networking working

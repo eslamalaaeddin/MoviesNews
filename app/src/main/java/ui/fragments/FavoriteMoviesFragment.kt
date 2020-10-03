@@ -1,5 +1,6 @@
 package ui.fragments
 
+import adapters.FavoriteMoviesAdapter
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -9,25 +10,23 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.*
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_movies_favorite.*
 import models.DetailedMovie
 import viewmodels.FavoriteMoviesViewModel
 
 private const val TAG = "FavoriteMoviesFragment"
+@AndroidEntryPoint
 class FavoriteMoviesFragment : Fragment() {
-    private lateinit var favoriteMoviesAdapter: MoviesAdapter
-    private lateinit var favoriteMoviesRecyclerView: RecyclerView
-    private lateinit var favoriteMoviesViewModel: FavoriteMoviesViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        favoriteMoviesViewModel = ViewModelProviders.of(this).get(FavoriteMoviesViewModel::class.java)
-    }
+    private var favoriteMoviesAdapter: FavoriteMoviesAdapter = FavoriteMoviesAdapter(emptyList())
+    private val favoriteMoviesViewModel: FavoriteMoviesViewModel by viewModels()
 
     private lateinit var generalView: View
     override fun onCreateView(
@@ -39,69 +38,15 @@ class FavoriteMoviesFragment : Fragment() {
         return generalView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        favoriteMoviesRecyclerView = view.findViewById(R.id.movies_recycler_view)
-        favoriteMoviesRecyclerView.layoutManager =  GridLayoutManager(context,2)
-
-
-    }
-
-
-
     override fun onStart() {
         super.onStart()
-
         favoriteMoviesViewModel.favoriteMoviesLiveData.observe(viewLifecycleOwner, Observer {
-            Log.i(TAG, "onStart: ${it.size}")
-            favoriteMoviesAdapter = MoviesAdapter(it)
-            favoriteMoviesRecyclerView.adapter = favoriteMoviesAdapter
+            favoriteMoviesAdapter = FavoriteMoviesAdapter(it)
+            movies_recycler_view.adapter = favoriteMoviesAdapter
         })
 
     }
 
-    class MoviesAdapter(private val movies: List<DetailedMovie>) :
-        RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
-        inner class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-            private val movieImageView: ImageView = itemView.findViewById(R.id.movie_image_view)
-
-            init {
-                itemView.setOnClickListener(this)
-            }
-
-            @SuppressLint("SetTextI18n")
-            fun bind(movie: DetailedMovie) {
-
-                val url = "https://image.tmdb.org/t/p/w500".plus(movie.poster_path)
-
-                Picasso.get()
-                    .load(url)
-                    .placeholder(R.drawable.ic_loading)
-                    .into(movieImageView)
-            }
-
-            override fun onClick(item: View?) {
-                val movie = movies[adapterPosition]
-                Utils.setMovieDataForIntent(movie.id)
-                callback.onMovieClicked()
-            }
-
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
-            val frameLayout = LayoutInflater.from(parent.context).inflate(R.layout.favorite_movie_item,parent,false) as FrameLayout
-            return MoviesViewHolder(frameLayout)
-        }
-
-        override fun getItemCount(): Int {
-            return movies.size
-        }
-
-        override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-            val movie = movies[holder.adapterPosition]
-            holder.bind(movie)
-        }
-    }
 
 }
