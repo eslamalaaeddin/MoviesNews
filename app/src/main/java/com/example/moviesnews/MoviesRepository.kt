@@ -1,6 +1,7 @@
 package com.example.moviesnews
 
 import android.content.Context
+import database.MovieDao
 import network.MovieApi
 import di.RetrofitModule
 import di.RoomModule
@@ -8,15 +9,22 @@ import models.DetailedMovie
 import models.Model
 import models.Movie
 import models.Result
+import javax.inject.Inject
 
 const val BASE_URL = "https://api.themoviedb.org/3/movie/"
 private const val TAG = "MoviesRepository"
 private const val DATABASE_NAME = "movie-database"
+
+
+
 class MoviesRepository () {
 
     private val movieDao = RoomModule.getRoomDbInstance(getContext()).getMovieDao()
 
     private val movieApi:MovieApi = RetrofitModule.getMovieApi()
+
+//    @Inject lateinit var movieApi: MovieApi
+//    @Inject lateinit var movieDao: MovieDao
 
     /*
       Networking working
