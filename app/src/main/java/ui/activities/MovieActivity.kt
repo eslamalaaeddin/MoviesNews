@@ -1,4 +1,4 @@
-package com.example.moviesnews
+package ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -18,8 +18,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviesnews.MoviesRepository
+import com.example.moviesnews.R
+import com.example.moviesnews.Utils
 import com.squareup.picasso.Picasso
-import fragments.callback
+import ui.fragments.callback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

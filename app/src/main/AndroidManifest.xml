@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:name=".BaseApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".MovieActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name="ui.activities.MovieActivity"></activity>
+        <activity android:name="ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

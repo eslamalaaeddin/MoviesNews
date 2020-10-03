@@ -1,4 +1,4 @@
-package com.example.moviesnews
+package ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,11 +6,16 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.moviesnews.Callback
+import com.example.moviesnews.R
+import com.example.moviesnews.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import viewmodels.PopularMoviesViewModel
 
 private const val ID = "id"
 
 class MainActivity : AppCompatActivity(), Callback {
+   lateinit var popularMoviesViewModel: PopularMoviesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,9 +38,11 @@ class MainActivity : AppCompatActivity(), Callback {
 
     override fun onMovieClicked() {
         val movieIntent = Intent(this, MovieActivity::class.java)
-        movieIntent.putExtra(ID,Utils.itemId)
+        movieIntent.putExtra(ID, Utils.itemId)
         startActivity(movieIntent)
     }
+
+
 
 
 }

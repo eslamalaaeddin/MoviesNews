@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="#232323"
     android:id="@+id/fragment_container"
-    tools:context="MainActivity">
+    tools:context="ui.activities.MainActivity">
 
     <fragment
         android:id="@+id/my_nav_host_fragment"
