@@ -1,26 +1,19 @@
 package com.example.moviesnews
 
-import android.content.Context
 import database.MovieDao
-import network.MovieApi
-import di.RetrofitModule
-import di.RoomModule
 import models.DetailedMovie
 import models.Model
 import models.Movie
 import models.Result
-import java.security.AccessController.getContext
+import network.MovieApi
 import javax.inject.Inject
-
-private val movieDao = RoomModule.getRoomDbInstance(MoviesRepository.getContext()).getMovieDao()
-
-private val movieApi = RetrofitModule.getMovieApi()
 
 class MoviesRepository @Inject constructor() {
 
-    /*
-      Networking stuff
-   */
+   @Inject lateinit var movieApi: MovieApi
+   @Inject lateinit var movieDao: MovieDao
+
+   //Networking stuff
 
     suspend fun getPopularMovies () :List<Movie> = movieApi.getPopularMovies().results
 
@@ -36,10 +29,7 @@ class MoviesRepository @Inject constructor() {
 
     suspend fun getFavoriteMovies(movieId:Int) : DetailedMovie =  movieApi.getFav(movieId)
 
-
-    /*
-        Database stuff
-     */
+    // Database stuff
 
     suspend fun getMovies() : List<Model> = movieDao.getMovies()
 
@@ -48,27 +38,5 @@ class MoviesRepository @Inject constructor() {
     suspend fun insertMovie(model: Model) = movieDao.insertMovie(model)
 
     suspend fun deleteMovie(model: Model) = movieDao.deleteMovie(model)
-
-    suspend fun updateMovie(model: Model) = movieDao.updateMovie(model)
-
-    //to het a context instance
-    companion object{
-        private  var context : Context? = null
-
-        fun provideContext(contextFromBaseApplication: Context) {
-            if (context == null) {
-                   context = contextFromBaseApplication
-            }
-        }
-
-        fun getContext () : Context {
-            return context ?: throw IllegalStateException("Context required")
-        }
-
-    }
-
-
-
-
 
 }

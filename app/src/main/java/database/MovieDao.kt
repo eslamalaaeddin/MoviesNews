@@ -1,6 +1,7 @@
 package database
 
 import androidx.room.*
+import dagger.Provides
 import models.Model
 
 
@@ -19,7 +20,5 @@ interface MovieDao {
     @Delete
     suspend fun deleteMovie(movieModel: Model)
 
-    @Update
-    suspend fun updateMovie(movieModel: Model)
 
 }

@@ -19,12 +19,12 @@ class RoomModule {
     companion object{
         @Provides
         @Singleton
-        fun getRoomDbInstance (context: Context) : MovieDatabase{
+        fun getDao (@ApplicationContext context: Context) : MovieDao{
             return Room.databaseBuilder(
                 context.applicationContext,
                 MovieDatabase::class.java,
                 DATABASE_NAME
-            ).build()
+            ).build().getMovieDao()
         }
     }
 }
