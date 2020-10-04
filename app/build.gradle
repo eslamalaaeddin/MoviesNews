@@ -16,9 +16,6 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    buildFeatures{
-        dataBinding = true
-    }
 
     defaultConfig {
         applicationId "com.example.moviesnews"
@@ -99,6 +96,10 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
     // When using Java.
     annotationProcessor 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
+
+    //Mockito
+    testImplementation 'org.mockito:mockito-core:2.25.0'
+    testImplementation 'org.mockito:mockito-inline:2.25.0'
 
 
 }
