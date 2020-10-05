@@ -36,8 +36,7 @@ class RecommendedMoviesAdapter(private val movies: List<Movie>) :
 
         override fun onClick(item: View?) {
             val movie = movies[adapterPosition]
-            Utils.setMovieDataForIntent(movie.id)
-            callback.onMovieClicked()
+            callback.onMovieClicked(movie.id)
         }
 
     }

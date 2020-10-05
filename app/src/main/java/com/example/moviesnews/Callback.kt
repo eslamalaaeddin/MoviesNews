@@ -1,5 +1,5 @@
 package com.example.moviesnews
 
 interface Callback {
-    fun onMovieClicked()
+    fun onMovieClicked(movieId:Long)
 }

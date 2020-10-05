@@ -17,7 +17,7 @@ interface MovieDao {
     fun getMovies() : LiveData<List<FavoriteMovieModel>>
 
     @Query ("SELECT * FROM favoritemoviemodel WHERE movieId=(:itemId)")
-    suspend fun getMovie (itemId:Int): FavoriteMovieModel
+    suspend fun getMovie (itemId:Long): FavoriteMovieModel
 
     @Insert
     suspend fun insertMovie(movieModel: FavoriteMovieModel)

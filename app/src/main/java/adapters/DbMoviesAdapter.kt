@@ -38,8 +38,7 @@ import ui.fragments.callback
 
             override fun onClick(item: View?) {
                 val movie = movies[adapterPosition]
-                Utils.setMovieDataForIntent(movie.movieId)
-                callback.onMovieClicked()
+                callback.onMovieClicked(movie.movieId)
             }
 
         }

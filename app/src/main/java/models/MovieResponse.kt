@@ -13,7 +13,7 @@ data class Movie (
      val vote_count:Int ,
      val video:Boolean ,
      val poster_path:String,
-     val id:Int,
+     val id:Long,
      val adult:Boolean ,
      val backdrop_path:String ,
      val original_language:String,

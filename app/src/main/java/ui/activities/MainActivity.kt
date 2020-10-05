@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity(), Callback {
         bottom_nav.setupWithNavController(navController)
     }
 
-    override fun onMovieClicked() {
+    override fun onMovieClicked(movieId:Long) {
         val movieIntent = Intent(this, MovieActivity::class.java)
-        movieIntent.putExtra(ID, Utils.itemId)
+        movieIntent.putExtra(ID, movieId)
         startActivity(movieIntent)
     }
 

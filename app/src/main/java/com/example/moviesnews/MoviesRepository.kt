@@ -22,13 +22,13 @@ class MoviesRepository @Inject constructor() {
 
     suspend fun getUpComingMovies () : List<Movie> = movieApi.getUpComingMovies().results
 
-    suspend fun getMovieDetails() : DetailedMovie =  movieApi.getMovieDetails(Utils.itemId)
+    suspend fun getMovieDetails(movieId: Long) : DetailedMovie =  movieApi.getMovieDetails(movieId)
 
-    suspend fun getMovieRecommendations () : List<Movie> = movieApi.getMovieRecommendations(Utils.itemId).results
+    suspend fun getMovieRecommendations (movieId: Long) : List<Movie> = movieApi.getMovieRecommendations(movieId).results
 
-    suspend fun getMovieTrailer () : List<Result>  = movieApi.getMovieTrailer(Utils.itemId).results
+    suspend fun getMovieTrailer (movieId: Long) : List<Result>  = movieApi.getMovieTrailer(movieId).results
 
-    suspend fun getFavoriteMovies(movieId:Int) : DetailedMovie =  movieApi.getFav(movieId)
+   // suspend fun getFavoriteMovies(movieId:Int) : DetailedMovie =  movieApi.getFav(movieId)
 
     // Database stuff
 
@@ -36,7 +36,7 @@ class MoviesRepository @Inject constructor() {
 
    fun getMovies() : LiveData<List<FavoriteMovieModel>> = movieDao.getMovies()
 
-    suspend fun getMovie(movieId:Int) : FavoriteMovieModel = movieDao.getMovie(movieId)
+    suspend fun getMovie(movieId:Long) : FavoriteMovieModel = movieDao.getMovie(movieId)
 
     suspend fun insertMovie(model: FavoriteMovieModel) = movieDao.insertMovie(model)
 

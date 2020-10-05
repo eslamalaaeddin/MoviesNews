@@ -18,15 +18,15 @@ interface MovieApi  {
     suspend fun getUpComingMovies(): MovieResponse
 
     @GET("{movie_id}?api_key=$apiKey")
-    suspend fun getMovieDetails( @Path ("movie_id") id:Int): DetailedMovie
+    suspend fun getMovieDetails( @Path ("movie_id") id:Long): DetailedMovie
 
     @GET("{movie_id}/recommendations?api_key=$apiKey")
-    suspend fun getMovieRecommendations( @Path ("movie_id") id:Int): MovieResponse
+    suspend fun getMovieRecommendations( @Path ("movie_id") id:Long): MovieResponse
 
     @GET("{movie_id}/videos?api_key=$apiKey")
-    suspend fun getMovieTrailer(@Path("movie_id")id:Int): MovieTrailerModel
+    suspend fun getMovieTrailer(@Path("movie_id")id:Long): MovieTrailerModel
 
     @GET("{movie_id}?api_key=$apiKey")
-    suspend fun getFav( @Path ("movie_id") id:Int): DetailedMovie
+    suspend fun getFav( @Path ("movie_id") id:Long): DetailedMovie
 
 }

@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviesnews.MoviesRepository
 import com.example.moviesnews.R
-import com.example.moviesnews.Utils
+//import com.example.moviesnews.Utils
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_movie.*
@@ -25,13 +25,14 @@ import viewmodels.MovieViewModel
 import javax.inject.Inject
 
 private const val TAG = "MovieActivity"
+private const val ID = "id"
 @AndroidEntryPoint
 class MovieActivity : AppCompatActivity() {
     private val movieViewModel: MovieViewModel by viewModels()
     private lateinit var recommendedMoviesAdapter: RecommendedMoviesAdapter
 
     private var key = ""
-    private var movieId = 0
+    private var movieId = 0L
     private var frontPosterUrl = ""
     private var backPosterUrl = ""
     private var homePage = ""
@@ -43,6 +44,12 @@ class MovieActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
+
+        movieId = intent.getLongExtra(ID,0L)
+
+//        startActivity(Intent(this,MovieViewModel::class.java).apply {
+//            putExtra(ID,movieId)
+//        })
 
         //recycler view
         movies_recycler_view.layoutManager =
@@ -129,7 +136,7 @@ class MovieActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         scope.launch {
-            val returned : FavoriteMovieModel? = repository.getMovie(Utils.itemId)
+            val returned : FavoriteMovieModel? = repository.getMovie(movieId)
 
             if (returned != null) {
 
