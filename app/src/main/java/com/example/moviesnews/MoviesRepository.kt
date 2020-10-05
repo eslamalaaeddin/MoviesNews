@@ -2,7 +2,7 @@ package com.example.moviesnews
 
 import database.MovieDao
 import models.DetailedMovie
-import models.Model
+import models.FavoriteMovieModel
 import models.Movie
 import models.Result
 import network.MovieApi
@@ -31,12 +31,12 @@ class MoviesRepository @Inject constructor() {
 
     // Database stuff
 
-    suspend fun getMovies() : List<Model> = movieDao.getMovies()
+    suspend fun getMovies() : List<FavoriteMovieModel> = movieDao.getMovies()
 
-    suspend fun getMovie(movieId:Int) : Model = movieDao.getMovie(movieId)
+    suspend fun getMovie(movieId:Int) : FavoriteMovieModel = movieDao.getMovie(movieId)
 
-    suspend fun insertMovie(model: Model) = movieDao.insertMovie(model)
+    suspend fun insertMovie(model: FavoriteMovieModel) = movieDao.insertMovie(model)
 
-    suspend fun deleteMovie(model: Model) = movieDao.deleteMovie(model)
+    suspend fun deleteMovie(model: FavoriteMovieModel) = movieDao.deleteMovie(model)
 
 }

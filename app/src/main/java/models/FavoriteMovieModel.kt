@@ -4,5 +4,5 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Model (@PrimaryKey val movieId:Int, val favorite:Int = 0) {
+data class FavoriteMovieModel (@PrimaryKey val movieId:Int) {
 }

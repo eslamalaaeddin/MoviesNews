@@ -5,34 +5,22 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.MoviesRepository
 import com.example.moviesnews.R
 import com.example.moviesnews.Utils
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_movie.*
-import ui.fragments.callback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import models.DetailedMovie
-import models.Model
-import models.Movie
+import models.FavoriteMovieModel
 import viewmodels.MovieViewModel
 import javax.inject.Inject
 
@@ -102,7 +90,7 @@ class MovieActivity : AppCompatActivity() {
                     val browserIntent =
                         Intent(Intent.ACTION_VIEW, Uri.parse(homePage))
                     val browserChooserIntent =
-                        Intent.createChooser(browserIntent, "Choose browser of your choice")
+                        Intent.createChooser(browserIntent, "Open with")
                     startActivity(browserChooserIntent)
                 }
             }
@@ -113,7 +101,7 @@ class MovieActivity : AppCompatActivity() {
         favorite_image_view.setOnClickListener{
 
             scope.launch {
-                var returned : Model = repository.getMovie(movieId)
+                var returned : FavoriteMovieModel = repository.getMovie(movieId)
 
                 if (returned != null) {
                    // returned = Model(movieId, 0)
@@ -124,7 +112,7 @@ class MovieActivity : AppCompatActivity() {
                     Toast.makeText(this@MovieActivity, "Removed from favorites.", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    returned = Model(movieId, 1)
+                    returned = FavoriteMovieModel(movieId)
                     repository.insertMovie(returned)
                     favorite_image_view.setColorFilter(
                         ContextCompat.getColor(this@MovieActivity, R.color.favorite),
@@ -141,23 +129,22 @@ class MovieActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         scope.launch {
-            val returned : Model = repository.getMovie(Utils.itemId)
+            val returned : FavoriteMovieModel = repository.getMovie(Utils.itemId)
 
             if (returned != null) {
 
-            if (returned.favorite == 0) {
-                favorite_image_view.setColorFilter(
-                    ContextCompat.getColor(this@MovieActivity, R.color.unFavorite),
-                    android.graphics.PorterDuff.Mode.SRC_IN)
-            } else {
                 favorite_image_view.setColorFilter(
                     ContextCompat.getColor(this@MovieActivity, R.color.favorite),
                     android.graphics.PorterDuff.Mode.SRC_IN)
+
             }
+            else{
+                favorite_image_view.setColorFilter(
+                    ContextCompat.getColor(this@MovieActivity, R.color.unFavorite),
+                    android.graphics.PorterDuff.Mode.SRC_IN)
             }
 
         }
-
 
     }
 
@@ -186,7 +173,5 @@ class MovieActivity : AppCompatActivity() {
                 .into(back_poster_image_view)
         })
     }
-
-
 
 }

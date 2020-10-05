@@ -33,14 +33,14 @@ class FavoriteMoviesFragment : Fragment() {
         return generalView
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         favoriteMoviesViewModel.favoriteMoviesLiveData.observe(viewLifecycleOwner, Observer {
             favoriteMoviesAdapter = DbMoviesAdapter(it)
             movies_recycler_view.adapter = favoriteMoviesAdapter
         })
-
     }
+
 
 
 
