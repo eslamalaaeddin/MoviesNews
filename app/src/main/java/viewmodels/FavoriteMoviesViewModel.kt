@@ -8,22 +8,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import models.DetailedMovie
 import com.example.moviesnews.MoviesRepository
+import models.FavoriteMovieModel
 
 class FavoriteMoviesViewModel @ViewModelInject constructor(
     private val moviesRepository: MoviesRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel()  {
 
-    private val favoriteMovies = mutableListOf<DetailedMovie>()
 
-    val favoriteMoviesLiveData : LiveData<MutableList<DetailedMovie>> = liveData {
-        val favoriteMoviesFromDb = moviesRepository.getMovies()
-        for (movie in favoriteMoviesFromDb) {
-            val favMovie = moviesRepository.getFavoriteMovies(movie.movieId)
-            favoriteMovies.add(favMovie)
-        }
 
-        emit(favoriteMovies)
-    }
+//    val favoriteMoviesLiveData : LiveData<List<FavoriteMovieModel>> = liveData {
+//        val data = moviesRepository.getMovies()
+//        emit(data)
+//    }
+
+    val favoriteMoviesLiveData = moviesRepository.getMovies()
 
 }

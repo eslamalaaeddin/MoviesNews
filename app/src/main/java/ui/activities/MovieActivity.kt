@@ -101,7 +101,7 @@ class MovieActivity : AppCompatActivity() {
         favorite_image_view.setOnClickListener{
 
             scope.launch {
-                var returned : FavoriteMovieModel = repository.getMovie(movieId)
+                var returned : FavoriteMovieModel? = repository.getMovie(movieId)
 
                 if (returned != null) {
                    // returned = Model(movieId, 0)
@@ -112,7 +112,7 @@ class MovieActivity : AppCompatActivity() {
                     Toast.makeText(this@MovieActivity, "Removed from favorites.", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    returned = FavoriteMovieModel(movieId)
+                    returned = FavoriteMovieModel(movieId,frontPosterUrl)
                     repository.insertMovie(returned)
                     favorite_image_view.setColorFilter(
                         ContextCompat.getColor(this@MovieActivity, R.color.favorite),
@@ -129,7 +129,7 @@ class MovieActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         scope.launch {
-            val returned : FavoriteMovieModel = repository.getMovie(Utils.itemId)
+            val returned : FavoriteMovieModel? = repository.getMovie(Utils.itemId)
 
             if (returned != null) {
 

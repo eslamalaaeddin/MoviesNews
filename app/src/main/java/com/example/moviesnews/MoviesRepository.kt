@@ -1,5 +1,6 @@
 package com.example.moviesnews
 
+import androidx.lifecycle.LiveData
 import database.MovieDao
 import models.DetailedMovie
 import models.FavoriteMovieModel
@@ -31,7 +32,9 @@ class MoviesRepository @Inject constructor() {
 
     // Database stuff
 
-    suspend fun getMovies() : List<FavoriteMovieModel> = movieDao.getMovies()
+//    suspend fun getMovies() : List<FavoriteMovieModel> = movieDao.getMovies()
+
+   fun getMovies() : LiveData<List<FavoriteMovieModel>> = movieDao.getMovies()
 
     suspend fun getMovie(movieId:Int) : FavoriteMovieModel = movieDao.getMovie(movieId)
 

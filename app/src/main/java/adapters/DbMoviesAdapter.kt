@@ -11,10 +11,11 @@ import com.example.moviesnews.R
 import com.example.moviesnews.Utils
 import com.squareup.picasso.Picasso
 import models.DetailedMovie
+import models.FavoriteMovieModel
 import ui.fragments.callback
 
 
-    class DbMoviesAdapter(private val movies: List<DetailedMovie>) :
+    class DbMoviesAdapter(private val movies: List<FavoriteMovieModel>) :
         RecyclerView.Adapter<DbMoviesAdapter.MoviesViewHolder>() {
 
         inner class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -25,19 +26,19 @@ import ui.fragments.callback
             }
 
             @SuppressLint("SetTextI18n")
-            fun bind(movie: DetailedMovie) {
+            fun bind(movie: FavoriteMovieModel) {
 
-                val url = "https://image.tmdb.org/t/p/w500".plus(movie.poster_path)
+                val imageUrl = movie.posterPath
 
                 Picasso.get()
-                    .load(url)
+                    .load(imageUrl)
                     .placeholder(R.drawable.ic_loading)
                     .into(movieImageView)
             }
 
             override fun onClick(item: View?) {
                 val movie = movies[adapterPosition]
-                Utils.setMovieDataForIntent(movie.id)
+                Utils.setMovieDataForIntent(movie.movieId)
                 callback.onMovieClicked()
             }
 

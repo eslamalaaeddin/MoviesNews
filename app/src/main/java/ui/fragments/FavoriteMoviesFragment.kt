@@ -2,6 +2,7 @@ package ui.fragments
 
 import adapters.DbMoviesAdapter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,8 +34,8 @@ class FavoriteMoviesFragment : Fragment() {
         return generalView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         favoriteMoviesViewModel.favoriteMoviesLiveData.observe(viewLifecycleOwner, Observer {
             favoriteMoviesAdapter = DbMoviesAdapter(it)
             movies_recycler_view.adapter = favoriteMoviesAdapter
