@@ -1,18 +1,21 @@
-package ui.activities
+package views.activities
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.moviesnews.BaseApplication
 import com.example.moviesnews.Callback
 import com.example.moviesnews.R
-import com.example.moviesnews.Utils
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import viewmodels.PopularMoviesViewModel
+
 
 private const val ID = "id"
 @AndroidEntryPoint
@@ -33,11 +36,12 @@ class MainActivity : AppCompatActivity(), Callback {
         bottom_nav.setupWithNavController(navController)
     }
 
-    override fun onMovieClicked(movieId:Long) {
+    override fun onMovieClicked(movieId: Long) {
         val movieIntent = Intent(this, MovieActivity::class.java)
         movieIntent.putExtra(ID, movieId)
         startActivity(movieIntent)
     }
+
 
 
 

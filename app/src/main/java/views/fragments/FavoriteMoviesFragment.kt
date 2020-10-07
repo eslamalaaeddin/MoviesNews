@@ -1,8 +1,7 @@
-package ui.fragments
+package views.fragments
 
 import adapters.DbMoviesAdapter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

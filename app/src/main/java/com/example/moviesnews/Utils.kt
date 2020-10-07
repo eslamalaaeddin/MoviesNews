@@ -4,6 +4,7 @@ package com.example.moviesnews
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import androidx.core.content.ContextCompat.getSystemService
 
 
 object Utils {
@@ -13,6 +14,8 @@ object Utils {
         return connectivityManager!!.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)?.state == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)?.state == NetworkInfo.State.CONNECTED
     }
+
+
 
 
 }

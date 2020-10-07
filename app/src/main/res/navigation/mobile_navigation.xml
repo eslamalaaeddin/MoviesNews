@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/popularMoviesFragment"
-        android:name="ui.fragments.PopularMoviesFragment"
+        android:name="views.fragments.PopularMoviesFragment"
         android:label="PopularMoviesFragment" >
         <action
             android:id="@+id/action_popularMoviesFragment_to_topRatedMoviesFragment"
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/topRatedMoviesFragment"
-        android:name="ui.fragments.TopRatedMoviesFragment"
+        android:name="views.fragments.TopRatedMoviesFragment"
         android:label="TopRatedMoviesFragment" >
         <action
             android:id="@+id/action_topRatedMoviesFragment_to_popularMoviesFragment"
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/upComingMoviesFragment"
-        android:name="ui.fragments.UpComingMoviesFragment"
+        android:name="views.fragments.UpComingMoviesFragment"
         android:label="UpComingMoviesFragment" >
         <action
             android:id="@+id/action_upComingMoviesFragment_to_topRatedMoviesFragment"
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteMoviesFragment"
-        android:name="ui.fragments.FavoriteMoviesFragment"
+        android:name="views.fragments.FavoriteMoviesFragment"
         android:label="FavoriteMoviesFragment" >
         <action
             android:id="@+id/action_favoriteMoviesFragment_to_upComingMoviesFragment"

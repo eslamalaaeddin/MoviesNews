@@ -8,11 +8,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.R
-import com.example.moviesnews.Utils
 import com.squareup.picasso.Picasso
-import models.DetailedMovie
 import models.FavoriteMovieModel
-import ui.fragments.callback
+import views.fragments.callback
 
 
     class DbMoviesAdapter(private val movies: List<FavoriteMovieModel>) :

@@ -9,10 +9,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesnews.R
-import com.example.moviesnews.Utils
 import com.squareup.picasso.Picasso
 import models.Movie
-import ui.fragments.callback
+import views.fragments.callback
 
 
 class ApiMoviesAdapter (private val movies:List<Movie>) :
