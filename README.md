@@ -1,7 +1,7 @@
 # MoviesNews
 This repository is for my new app called MoviesNews which give the user updated news about movies including popular movies, upcoming movies, and top rated movies.
 
-#API
+# API
 I used The Movie Database (TMDB) APIs
 
 # Built with:
