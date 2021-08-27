@@ -52,7 +52,3 @@ Picasso
  <img src = "images/lion_king.jpg" width = "256">
 </p>
 
-<p align="center">
- <img src = "images/favorites.jpg" width = "256">
-</p>
-
